@@ -18,7 +18,7 @@
       "@utils/*": ["utils/*"],
       "@typings/*": ["typings/*"]
     }
-  },
+  }, 
   "ts-node": {
     "compilerOptions": {
       "module": "commonjs",

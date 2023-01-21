@@ -1,10 +1,11 @@
-import { ChatWrapper } from '@components/Chat/styles';
-import { IDM, IChat } from '@typings/db';
-import React, { VFC, memo, useMemo } from 'react';
+import { IChat, IDM } from '@typings/db';
+import React, { memo, useMemo, VFC } from 'react';
+import { ChatWrapper } from './styles';
 import gravatar from 'gravatar';
 import dayjs from 'dayjs';
 import regexifyString from 'regexify-string';
 import { Link, useParams } from 'react-router-dom';
+import { jsx } from '@emotion/react';
 
 interface Props {
   data: IDM | IChat;
@@ -15,14 +16,12 @@ const Chat: VFC<Props> = ({ data }) => {
   const { workspace } = useParams<{ workspace: string; channel: string }>();
   const user = 'Sender' in data ? data.Sender : data.User;
 
-  const result = useMemo(
+  const result = useMemo<(string | JSX.Element)[] | JSX.Element>(
     () =>
-      // uploads\\서버주소
       data.content.startsWith('uploads\\') || data.content.startsWith('uploads/') ? (
         <img src={`${BACK_URL}/${data.content}`} style={{ maxHeight: 200 }} />
       ) : (
         regexifyString({
-          input: data.content,
           pattern: /@\[(.+?)]\((\d+?)\)|\n/g,
           decorator(match, index) {
             const arr: string[] | null = match.match(/@\[(.+?)]\((\d+?)\)/)!;
@@ -35,15 +34,15 @@ const Chat: VFC<Props> = ({ data }) => {
             }
             return <br key={index} />;
           },
+          input: data.content,
         })
       ),
     [workspace, data.content],
   );
-
   return (
     <ChatWrapper>
       <div className="chat-img">
-        <img src={gravatar.url(user.email, { s: '36px', d: 'retro' })} alt={user.nickname} />
+        <img src={gravatar.url(user.email, { s: '36px', d: 'retro' })} alt={user.nickname}></img>
       </div>
       <div className="chat-text">
         <div className="chat-user">

@@ -472,7 +472,11 @@ router.post(
         return res.status(404).send("존재하지 않는 워크스페이스입니다.");
       }
       const SenderId = req.user.id;
-      const ReceiverId = req.params.id;
+      const ReceiverId = req.params.id;      
+      console.log(SenderId);
+      console.log(ReceiverId);
+      console.log(workspace.id);
+      console.log(req.body.content);      
       const dm = await DM.create({
         SenderId,
         ReceiverId,

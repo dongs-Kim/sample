@@ -11,6 +11,7 @@ export const CollapseButton = styled.button<{ collapse: boolean }>`
   color: white;
   margin-left: 10px;
   cursor: pointer;
+
   ${({ collapse }) =>
     collapse &&
     `

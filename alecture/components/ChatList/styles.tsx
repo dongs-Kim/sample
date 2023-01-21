@@ -18,6 +18,7 @@ export const StickyHeader = styled.div`
   width: 100%;
   position: sticky;
   top: 14px;
+
   & button {
     font-weight: bold;
     font-size: 13px;
